@@ -37,8 +37,9 @@ Build the RAG system, run:
 
 ```bash
 python build_rag.py
+```
 
-### 3. Running the App
+### 4. Running the App
 The interface is built using **Streamlit** for a seamless, interactive experience. To launch the frontend and do Q/A, run:
 
 ```bash
