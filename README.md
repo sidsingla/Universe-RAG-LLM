@@ -27,7 +27,10 @@ The RAG system is fueled by official scientific data.
 ## 🚀 Getting Started
 
 ### 1. Prerequisites
-Ensure you have Python installed and the required libraries (Streamlit, and your chosen LLM/Vector DB framework) configured in your environment.
+Ensure you have Python installed (3.11) and the required libraries (Streamlit, and your chosen LLM/Vector DB framework) configured in your environment. Run requirements.txt!
+
+### Adding keys
+Add Pinecone and Gemini keys in config.py
 
 ### 2. Running the App
 The interface is built using **Streamlit** for a seamless, interactive experience. To launch the frontend, run:
