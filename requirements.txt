@@ -1,0 +1,10 @@
+pinecone==8.1.0
+langchain==1.2.0
+langchain-google-genai==4.2.1
+langchain-community==0.4.1
+langchain-text-splitters==1.1.1
+unstructured==0.21.5
+unstructured[pdf]==0.21.5
+pdf2image==1.17.0
+streamlit==1.56.0
+watchdog==6.0.0
