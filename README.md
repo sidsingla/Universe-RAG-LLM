@@ -32,8 +32,14 @@ Ensure you have Python installed (3.11) and the required libraries (Streamlit, a
 ### 2. Adding keys
 Add Pinecone and Gemini keys in config.py
 
+### 3. Build RAG
+Build the RAG system, run:
+
+```bash
+python build_rag.py
+
 ### 3. Running the App
-The interface is built using **Streamlit** for a seamless, interactive experience. To launch the frontend, run:
+The interface is built using **Streamlit** for a seamless, interactive experience. To launch the frontend and do Q/A, run:
 
 ```bash
 streamlit run ui_frontend/app.py
