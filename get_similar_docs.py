@@ -1,11 +1,7 @@
 import argparse
 import pinecone
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
-
-PINECONE_API_KEY = ""
-PINECONE_INDEX_NAME = ""
-PINECONE_NAMESPACE = "default"
-GEMINI_API_KEY = ""
+from config import PINECONE_API_KEY, PINECONE_INDEX_NAME, GEMINI_API_KEY, PINECONE_NAMESPACE
 EMBEDDING_MODEL = "gemini-embedding-2-preview"
 EMBEDDING_DIM = 1024
 

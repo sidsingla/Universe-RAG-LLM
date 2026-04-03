@@ -5,12 +5,12 @@ import pinecone
 from langchain_community.document_loaders import DirectoryLoader
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+from config import PINECONE_API_KEY, PINECONE_INDEX_NAME, GEMINI_API_KEY, PINECONE_NAMESPACE
 
 DATA_DIR = "./data"
 EXTENSIONS = {".txt", ".pdf", ".md", ".docx", ".html", ".csv"}
 CHUNK_SIZE = 1000
 CHUNK_OVERLAP = 150
-NAMESPACE = os.getenv("PINECONE_NAMESPACE", "default")
 EMBEDDING_DIM = 1024
 
 def get_key(path):
@@ -22,7 +22,7 @@ def ingest_one(index, embeddings, rel_path):
   file_key = get_key(rel_path)
   meta_id = f"meta::{file_key}"
 
-  existing = index.fetch(ids=[meta_id], namespace=NAMESPACE).get("vectors", {}).get(meta_id)
+  existing = index.fetch(ids=[meta_id], namespace=PINECONE_NAMESPACE).get("vectors", {}).get(meta_id)
   if existing:
     print(f"Skip existing: {rel_path}")
     return "skipped"
@@ -46,7 +46,7 @@ def ingest_one(index, embeddings, rel_path):
       meta = dict(chunks[i].metadata)
       meta["text"] = texts[i]
       payload.append((ids[i], vec, meta))
-    index.upsert(vectors=payload, namespace=NAMESPACE)
+    index.upsert(vectors=payload, namespace=PINECONE_NAMESPACE)
 
   meta_vector = embeddings.embed_query(
     f"meta {rel_path}", output_dimensionality=EMBEDDING_DIM
@@ -59,7 +59,7 @@ def ingest_one(index, embeddings, rel_path):
         {"type": "ingest_meta", "source": rel_path, "chunk_count": len(chunks)},
       )
     ],
-    namespace=NAMESPACE,
+    namespace=PINECONE_NAMESPACE,
   )
   return "indexed"
 
@@ -69,8 +69,6 @@ def main():
     print(f"Missing directory: {DATA_DIR}")
     return
 
-  PINECONE_API_KEY = ''
-  PINECONE_INDEX_NAME = ''
   if not PINECONE_API_KEY or not PINECONE_INDEX_NAME:
     print("Set PINECONE_API_KEY and PINECONE_INDEX_NAME.")
     return
@@ -81,7 +79,7 @@ def main():
   # Text-only: gemini-embedding-001. Multimodal: gemini-embedding-2-preview
   embeddings = GoogleGenerativeAIEmbeddings(
     model="gemini-embedding-2-preview",
-    google_api_key="",
+    google_api_key=GEMINI_API_KEY,
   )
 
   # Enforce dimension match to avoid quality loss from truncation/padding.
